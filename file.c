@@ -30,6 +30,8 @@ void ft_init_config(char **line)
     g_conf.max_width = 0;
     *line = NULL;
     g_conf.head = NULL;
+    g_conf.map_start = 0;
+    g_player = (t_player){0, 0, 0, 0};
 }
 
 void ft_read_conf(char *line)
@@ -49,6 +51,7 @@ void	ft_read_map(char *line)
     int     len;
     t_list  *new;
 
+    g_conf.map_start = 1;
     len = ft_strlen(line);
 	g_conf.max_width = g_conf.max_width > len ? g_conf.max_width : len;
     new = ft_lstnew(line);
@@ -81,8 +84,9 @@ int main(int argc, char **argv)
         r = get_next_line(fd, &line);
         if (g_conf.count != 8)
             ft_read_conf(line);
-        else
+        else if (*line)
 			ft_read_map(line);
     }
     ft_handle_map();
+    // system("leaks a.out");
 }

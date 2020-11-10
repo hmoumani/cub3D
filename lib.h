@@ -63,6 +63,14 @@ typedef struct  s_rgb
 	int		b;
 }				t_rgb;
 
+typedef	struct s_player
+{
+	float	angle;
+	int		default_i;
+	int		default_j;
+	int		found;
+}				t_player;
+
 
 typedef struct  s_config
 {
@@ -80,6 +88,7 @@ typedef struct  s_config
 	int			max_height;
 	t_list		*head;
 	char		**map;
+	int			map_start;
 }               t_config;
 
 t_config g_conf;
@@ -94,7 +103,8 @@ typedef struct s_mlx_info{
 	int		endian;
 }               t_mlx_info;
 
-t_mlx_info g_env;
+t_mlx_info	g_env;
+t_player	g_player;
 
 // typedef struct s_position
 // {
@@ -184,5 +194,7 @@ void			ft_lstdelone(t_list *lst, void (*del)(void *));
 t_list			*ft_lstlast(t_list *lst);
 void			ft_handle_map();
 size_t			ft_strlcpy(char *dst, const char *src, size_t size);
-
+void			ft_print_error(char *s);
+void    		ft_check_zero(int i, int j);
+void    		ft_check_player(int i, int j, char c);
 
