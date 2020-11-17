@@ -40,7 +40,7 @@
 # define PLAYER_R TILE_SIZE / 4
 
 # define FOV_ANGLE (60 *(PI / 180))
-# define NUM_RAYS 100
+# define NUM_RAYS 2000
 
 typedef struct	s_list
 {
@@ -79,8 +79,8 @@ typedef struct  s_config
 {
     int     	win_h;
 	int     	win_w;
-	t_rgb		f;
-	t_rgb		c;
+	int			f;
+	int			c;
     t_texture	no;
 	t_texture	so;
 	t_texture	we;
@@ -163,6 +163,7 @@ float			ft_rad(float num);
 float			ft_sign(float num);
 int				has_wall(t_position pos);
 float			normalizeangle(float rayangle);
+void			put_my_pixel(int x, int y, int color);
 char			**ft_split(char const *s, char c, int count);
 int				ft_count_words(char *str, char c);
 void	        ft_putstr_fd(char *s, int fd);
@@ -203,7 +204,8 @@ int				ft_check_sprite(int i, int j, char c);
 int				ft_is_empty(char *line);
 void 			ft_cast_ray(float rayAngle, int id);
 float 			distance_between(float x1, float y1, float x2, float y2);
-
-
+void			ft_generate_3d();
+void			ft_clear_buffer();
+int				create_trgb(int t, int r, int g, int b);
 
 #endif

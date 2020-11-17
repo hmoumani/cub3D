@@ -36,9 +36,9 @@ char		*ft_missing()
         return ("East texture");
 	else if (g_conf.spr.height == -1)
         return ("Sprite texture");
-	else if (g_conf.f.r == -1)
+	else if (g_conf.f == -1)
         return ("floor texture");
-	else if (g_conf.c.r == -1)
+	else if (g_conf.c == -1)
         return ("Ceilling texture");
 	return "smth";
 }

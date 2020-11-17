@@ -433,7 +433,7 @@ void ft_cast_rays()
 		ft_cast_ray(rayAngle, i);
 		// ft_line(pos.x, pos.y, rays[i].wallHitX, rays[i].wallHitY);
 		draw_ray(rayAngle, rays[i].distance, 0x00FF00);
-		printf("id: %d, angle : %f, distance : %f\n", i, rayAngle, rays[i].distance);
+		// printf("id: %d, angle : %f, distance : %f\n", i, rayAngle, rays[i].distance);
 		rayAngle += FOV_ANGLE / 100;
 		i++;
 	}
@@ -552,7 +552,7 @@ int ft_render()
 
 int keyPress(int key, void *arg)
 {
-	printf("%d\n", key);
+	// printf("%d\n", key);
 	if (key == 53)
     {
 		mlx_destroy_window(g_env.ptr, g_env.win);
@@ -605,7 +605,7 @@ int main(int argc, char **argv)
 	// exit(1);
     g_env.ptr = mlx_init();
 	file(argc, argv);
-	TILE_SIZE = g_conf.win_w / g_conf.max_width;
+	// TILE_SIZE = g_conf.win_w / g_conf.max_width;
     g_env.win = mlx_new_window(g_env.ptr, g_conf.win_w, g_conf.win_h, "hello world!");
 	g_env.img =  mlx_new_image(g_env.ptr, g_conf.win_w, g_conf.win_h);
 	g_env.addr = mlx_get_data_addr(g_env.img, &g_env.bpp, &g_env.line_length, &g_env.endian);

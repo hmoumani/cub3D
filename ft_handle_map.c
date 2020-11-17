@@ -47,8 +47,7 @@ void    ft_check_zero(int i, int j)
         error = 1;
     if (error)
     {
-        printf("Error\nError in map file");
-        printf("%d, %d, %c\n", i, j, mp[i][j]);
+        ft_print_error("Error\nError in map file");
         exit(1);
     }
 	// else if (g_conf.map[i - 1] == ' ')

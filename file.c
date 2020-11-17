@@ -17,7 +17,7 @@
 
 void ft_init_config(char **line)
 {
-    g_conf = (t_config){-1, -1, (t_rgb){-1, -1, -1}, (t_rgb){-1, -1, -1}};
+    g_conf = (t_config){-1, -1, -1, -1};
     g_conf.no = (t_texture){NULL, -1, -1};
     g_conf.so = (t_texture){NULL, -1, -1};
     g_conf.we = (t_texture){NULL, -1, -1};
@@ -35,7 +35,7 @@ void ft_init_config(char **line)
     player.walkDirection = 0;
     player.rotationAngle = ft_rad(270);
     player.walkSpeed = 10;
-    player.turnSpeed = ft_rad(20);
+    player.turnSpeed = ft_rad(10);
 }
 
 void ft_read_conf(char *line)

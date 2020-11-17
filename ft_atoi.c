@@ -26,7 +26,7 @@ int has_wall(t_position pos)
 	int indexY = floor(pos.y / TILE_SIZE);
 	// if (indexX == 38 && indexY == 64)
 	// 	printf("here");
-	printf("x : %d, y : %d\n", indexX, indexY);
+	// printf("x : %d, y : %d\n", indexX, indexY);
 	if (indexX < 0 || indexX > g_conf.max_height - 1 || indexY < 0 || indexY > g_conf.max_width - 1)
 		return (True);
 	return (g_conf.map[indexX][indexY] == '1' || g_conf.map[indexX][indexY] == ' ');

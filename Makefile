@@ -41,5 +41,6 @@ all :
 	get_next_line.c \
 	get_next_line_utils.c \
 	ft_cast_ray.c \
+	ft_generate_3d.c \
 	-I /usr/local/include -L /usr/local/bin -lmlx -framework OpenGl -framework AppKit -g \
 	-o cub3D

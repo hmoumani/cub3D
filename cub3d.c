@@ -80,11 +80,9 @@ void ft_cast_rays()
 	i = 0;
 	while (i < NUM_RAYS)
 	{
-		if (i == 610)
-			printf("here");
 		ft_cast_ray(rayAngle, i);
-		printf("id: %d, angle : %f, distance : %f\n", i, rayAngle, rays[i].distance);
-		draw_ray(rayAngle, rays[i].distance, 0x00FF00);
+		// printf("id: %d, angle : %f, distance : %f\n", i, rayAngle, rays[i].distance);
+		// draw_ray(rayAngle, rays[i].distance, 0x00FF00);
 		rayAngle += FOV_ANGLE / NUM_RAYS;
 		i++;
 	}
@@ -111,37 +109,38 @@ int skip(int r, t_position pos,int color)
 
 void ft_player(int r, t_position pos,int coolor)
 {
-	skip(r, pos, 0x0000FF);
+	// skip(r, pos, 0x0000FF);
 	ft_cast_rays();
 }
 
 int ft_init()
 {
-	int i;
-	int j;
+	// int i;
+	// int j;
 
-	i = 0;
-	while (i < g_conf.max_height)
-	{
-		j = 0;
-		while (j < g_conf.max_width)
-		{
-			if (g_conf.map[i][j] == '1' || g_conf.map[i][j] == ' ')
-				ft_square(i * TILE_SIZE, j * TILE_SIZE, 0xFF0000, TILE_SIZE);
-			else
-				ft_square(i * TILE_SIZE, j * TILE_SIZE, 0x000000, TILE_SIZE);
-			j++;
-		}
-		i++;
-	}
-	rays = malloc (NUM_RAYS * sizeof(t_ray));
+	// i = 0;
+	// while (i < g_conf.max_height)
+	// {
+	// 	j = 0;
+	// 	while (j < g_conf.max_width)
+	// 	{
+	// 		if (g_conf.map[i][j] == '1' || g_conf.map[i][j] == ' ')
+	// 			ft_square(i * TILE_SIZE, j * TILE_SIZE, 0xFF0000, TILE_SIZE);
+	// 		else
+	// 			ft_square(i * TILE_SIZE, j * TILE_SIZE, 0x000000, TILE_SIZE);
+	// 		j++;
+	// 	}
+	// 	i++;
+	// }
 	return (1);
 }
 
 int ft_render()
 {
 	ft_init();
+	ft_clear_buffer();
 	ft_player(TILE_SIZE / 2, player.pos, 0x0000FF);
+	ft_generate_3d();
 	mlx_put_image_to_window(g_env.ptr, g_env.win, g_env.img, 0, 0);
 	return (1);
 }
@@ -164,7 +163,7 @@ void move_player()
 
 int keyPress(int key, void *arg)
 {
-	printf("%d\n", key);
+	// printf("%d\n", key);
 	if (key == 53)
     {
 		mlx_destroy_window(g_env.ptr, g_env.win);
@@ -180,11 +179,11 @@ int keyPress(int key, void *arg)
 	}
 	else if (key == 123)
 	{
-		player.turnDirection = 1;
+		player.turnDirection = -1;
 	}
 	else if (key == 124)
 	{
-		player.turnDirection = -1;
+		player.turnDirection = 1;
 	}
 	move_player();
 	ft_render();
@@ -200,9 +199,12 @@ int main(int argc, char **argv)
 	g_env.img =  mlx_new_image(g_env.ptr, g_conf.win_w, g_conf.win_h);
 	g_env.addr = mlx_get_data_addr(g_env.img, &g_env.bpp, &g_env.line_length, &g_env.endian);
 
-	ft_init();
-	printf("%d, %d\n", g_player.default_i, g_player.default_j);
+	rays = malloc (NUM_RAYS * sizeof(t_ray));
+	// ft_init();
+	// ft_generate_3d();
+	// printf("%d, %d\n", g_player.default_i, g_player.default_j);
 	ft_player(TILE_SIZE / 2, (t_position){g_player.default_i, g_player.default_j}, 0x0000ff);
+	ft_generate_3d();
 	mlx_put_image_to_window(g_env.ptr, g_env.win, g_env.img, 0, 0);
 	mlx_hook(g_env.win, 2, 1L<<0, keyPress, (void *)0);
     mlx_loop(g_env.ptr);
