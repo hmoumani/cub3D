@@ -42,6 +42,20 @@ void    ft_fill(int x,int start, int end, int color)
     }
 }
 
+int     ft_get_textcolor(int ray_id, int y, int top_pixel, int wall_strip_height)
+{
+    int text_x;
+    int text_y;
+    int distance_from_top = y + (wall_strip_height / 2) - (g_conf.win_h / 2);
+
+    if (rays[ray_id].wasHitVert)
+        text_x = (int)rays[ray_id].wallHitY % TILE_SIZE;
+    else 
+        text_x = (int)rays[ray_id].wallHitX % TILE_SIZE;
+    text_y = distance_from_top * ((float)g_conf.no.height / wall_strip_height);
+    return g_conf.no.addr[(g_conf.no.width * text_y) + text_x];
+}
+
 void    ft_generate_3d()
 {
     int i;
@@ -52,6 +66,7 @@ void    ft_generate_3d()
     int top_pixel;
     int bottom_pixel;
     float perp_dis;
+    
 
     i = 0;
     y = 0;
@@ -69,7 +84,7 @@ void    ft_generate_3d()
         ft_fill(i, 0, top_pixel, g_conf.f);
         while (y < bottom_pixel)
         {
-            put_my_pixel(y, i, 0xff00ff);
+            put_my_pixel(y, i, (int)ft_get_textcolor(i, y, top_pixel, wall_strip_height));
             y++;
         }
         ft_fill(i, bottom_pixel,g_conf.win_h, g_conf.c);

@@ -120,6 +120,7 @@ void ft_cast_ray(float rayAngle, int id)
 		rays[id].wallHitX = wall_hit_hor_x;
 		rays[id].wallHitY = wall_hit_hor_y;
 		rays[id].wasHitVert = False;
+
 	}
 	rays[id].rayAngle = rayAngle;
 }

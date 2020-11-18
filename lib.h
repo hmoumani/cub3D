@@ -32,7 +32,7 @@
 # define PI 3.14159265
 # define TWO_PI 6.28318530
 
-# define TILE_SIZE 15
+# define TILE_SIZE 64
 # define MAP_COLS 30
 # define MAP_ROWS 15
 # define WINDOW_WIDTH (MAP_COLS * 1)
@@ -54,9 +54,12 @@ typedef struct	s_list
 typedef struct	s_texture
 {
 	void    *img;
+	unsigned int *addr;
 	int		height;
 	int		width;
-
+	int     bpp;
+    int     line_length;
+    int     endian;
 }				t_texture;
 
 typedef struct  s_rgb

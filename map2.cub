@@ -1,5 +1,5 @@
 R 1000 2000
-NO ./a.xpm
+NO ./txt64-1.xpm
 SO ./b.xpm
 WE ./c.xpm
 EA ./d.xpm

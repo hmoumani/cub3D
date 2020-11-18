@@ -25,10 +25,10 @@ void    ft_check_player(int i, int j, char c)
         g_player.angle = 0;
     else if (c == 'N')
         g_player.angle = 0;
-    g_player.default_i = i * TILE_SIZE;
-    g_player.default_j = j * TILE_SIZE;
-    player.pos.x = i * TILE_SIZE;
-    player.pos.y = j * TILE_SIZE;
+    g_player.default_i = i * TILE_SIZE + ((int)TILE_SIZE / 2);
+    g_player.default_j = j * TILE_SIZE + ((int)TILE_SIZE / 2);
+    player.pos.x = i * TILE_SIZE + ((int)TILE_SIZE / 2);
+    player.pos.y = i * TILE_SIZE + ((int)TILE_SIZE / 2);
     g_player.found = 1;
 }
 

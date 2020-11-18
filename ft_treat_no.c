@@ -30,6 +30,7 @@ void    ft_treat_no(char **ptr)
         exit(1);
     }
     g_conf.no.img = mlx_xpm_file_to_image(g_env.ptr, ptr[1], &g_conf.no.width, &g_conf.no.height);
+    g_conf.no.addr=(unsigned int *)mlx_get_data_addr(g_conf.no.img, &g_conf.no.bpp, &g_conf.no.line_length, &g_conf.no.endian);
     if (!g_conf.no.img)
     {
         ft_putstr_fd("Error\n in north texture.can't open file! \n", 1);

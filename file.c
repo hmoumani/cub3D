@@ -18,11 +18,11 @@
 void ft_init_config(char **line)
 {
     g_conf = (t_config){-1, -1, -1, -1};
-    g_conf.no = (t_texture){NULL, -1, -1};
-    g_conf.so = (t_texture){NULL, -1, -1};
-    g_conf.we = (t_texture){NULL, -1, -1};
-    g_conf.ea = (t_texture){NULL, -1, -1};
-    g_conf.spr = (t_texture){NULL, -1, -1};
+    g_conf.no = (t_texture){NULL, NULL, -1, -1, -1, -1, -1};
+    g_conf.so = (t_texture){NULL, NULL, -1, -1, -1, -1, -1};
+    g_conf.we = (t_texture){NULL, NULL, -1, -1, -1, -1, -1};
+    g_conf.ea = (t_texture){NULL, NULL, -1, -1, -1, -1, -1};
+    g_conf.spr = (t_texture){NULL, NULL, -1, -1, -1, -1, -1};
     g_conf.count = 0;
     g_conf.max_width = 0;
     *line = NULL;
