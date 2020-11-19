@@ -18,17 +18,17 @@ void    ft_check_player(int i, int j, char c)
         ft_print_error("player duplicated\n");
     ft_check_zero(i, j);
     if (c == 'W')
-        g_player.angle = 0;
+        player.rotationAngle = ft_rad(90);
     else if (c == 'E')
-        g_player.angle = 0;
+        player.rotationAngle = ft_rad(270);
     else if (c == 'S')
-        g_player.angle = 0;
+        player.rotationAngle = ft_rad(0);
     else if (c == 'N')
-        g_player.angle = 0;
+        player.rotationAngle = ft_rad(180);
     g_player.default_i = i * TILE_SIZE + ((int)TILE_SIZE / 2);
     g_player.default_j = j * TILE_SIZE + ((int)TILE_SIZE / 2);
     player.pos.x = i * TILE_SIZE + ((int)TILE_SIZE / 2);
-    player.pos.y = i * TILE_SIZE + ((int)TILE_SIZE / 2);
+    player.pos.y = j * TILE_SIZE + ((int)TILE_SIZE / 2);
     g_player.found = 1;
 }
 
@@ -50,13 +50,12 @@ void    ft_check_zero(int i, int j)
         ft_print_error("Error\nError in map file");
         exit(1);
     }
-	// else if (g_conf.map[i - 1] == ' ')
 }
 
 int				ft_check_sprite(int i, int j, char c)
 {
     ft_check_zero(i, j);
-    // ft_lstadd_back(&g_conf.sprite_head, ft_lstnew();
+    // ft_lstadd_back(&g_conf.sprite_head, ft_lstnew([i,j]));
     return (0);
 }
 

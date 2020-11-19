@@ -127,7 +127,8 @@ typedef struct s_splayer
     int walkDirection;
     float rotationAngle;
     float walkSpeed;
-    float turnSpeed;
+    float	turnSpeed;
+	int		left_right;
 }               t_splayer;
 t_splayer player;
 
@@ -210,5 +211,7 @@ float 			distance_between(float x1, float y1, float x2, float y2);
 void			ft_generate_3d();
 void			ft_clear_buffer();
 int				create_trgb(int t, int r, int g, int b);
+void			ft_left_or_right();
+
 
 #endif

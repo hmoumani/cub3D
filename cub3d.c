@@ -149,8 +149,8 @@ void move_player()
 {
 	player.rotationAngle += player.turnDirection * player.turnSpeed;
 	float move_step = player.walkDirection * player.walkSpeed;
-	float newX = player.pos.x + cos(player.rotationAngle) * move_step;
-	float newY = player.pos.y + sin(player.rotationAngle) * move_step;
+	float newX = player.pos.x + cos(player.rotationAngle) * (move_step * 3);
+	float newY = player.pos.y + sin(player.rotationAngle) * (move_step * 3);
 	// printf("%d\n", has_wall((t_position){newX, newY}));
 	if (!has_wall((t_position){newX, newY}))
 	{
@@ -163,7 +163,7 @@ void move_player()
 
 int keyPress(int key, void *arg)
 {
-	// printf("%d\n", key);
+	printf("%d\n", key);
 	if (key == 53)
     {
 		mlx_destroy_window(g_env.ptr, g_env.win);
@@ -184,6 +184,18 @@ int keyPress(int key, void *arg)
 	else if (key == 124)
 	{
 		player.turnDirection = 1;
+	}
+	else if (key == 0)
+	{
+		player.left_right = -90;
+		ft_left_or_right();
+		player.left_right = 0;
+	}
+	else if (key == 2)
+	{
+		player.left_right = 90;
+		ft_left_or_right();
+		player.left_right = 0;
 	}
 	move_player();
 	ft_render();

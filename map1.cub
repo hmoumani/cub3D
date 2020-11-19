@@ -1,9 +1,9 @@
 R 1000 2000
 
-NO ./a.xpm
-SO ./b.xpm
-WE ./c.xpm
-EA ./d.xpm
+NO ./txt64-4.xpm
+SO ./txt64-1.xpm
+WE ./txt64-2.xpm
+EA ./txt64-3.xpm
 S ./t.xpm
 
    

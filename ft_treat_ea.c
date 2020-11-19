@@ -35,5 +35,6 @@ void    ft_treat_ea(char **ptr)
         ft_putstr_fd("Error\n in East texture. can't open file! \n", 1);
         exit(1);
     }
+    g_conf.ea.addr = (unsigned int *)mlx_get_data_addr(g_conf.ea.img, &g_conf.ea.bpp, &g_conf.ea.line_length, &g_conf.ea.endian);
     g_conf.count++;
 }

@@ -35,5 +35,6 @@ void    ft_treat_so(char **ptr)
         ft_putstr_fd("Error\n in south texture. can't open file! \n", 1);
         exit(1);
     }
+    g_conf.so.addr = (unsigned int *)mlx_get_data_addr(g_conf.so.img, &g_conf.so.bpp, &g_conf.so.line_length, &g_conf.so.endian);
     g_conf.count++;
 }

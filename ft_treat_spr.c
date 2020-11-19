@@ -35,5 +35,6 @@ void    ft_treat_spr(char **ptr)
         ft_putstr_fd("Error\n in sprite texture. can't open file! \n", 1);
         exit(1);
     }
+    g_conf.spr.addr = (unsigned int *)mlx_get_data_addr(g_conf.spr.img, &g_conf.spr.bpp, &g_conf.spr.line_length, &g_conf.spr.endian);
     g_conf.count++;
 }

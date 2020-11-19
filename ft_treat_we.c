@@ -35,5 +35,6 @@ void    ft_treat_we(char **ptr)
         ft_putstr_fd("Error\n in west texture. can't open file! \n", 1);
         exit(1);
     }
+    g_conf.we.addr = (unsigned int *)mlx_get_data_addr(g_conf.we.img, &g_conf.we.bpp, &g_conf.we.line_length, &g_conf.we.endian);
     g_conf.count++;
 }
