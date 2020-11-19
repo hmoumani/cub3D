@@ -12,78 +12,20 @@
 
 #include "lib.h"
 
-void	put_my_pixel(int x, int y, int color)
-{
-	char 	*dst;
-	
-	if (x >= 0 && y >= 0 && x < g_conf.win_h && y < g_conf.win_w)
-	{
-		dst = g_env.addr + (x * g_env.line_length + y * (g_env.bpp / 8));
-		*(unsigned int*)dst = color;
-	}
-}
-
-int ft_hor_line(int x, int y, int color, int size)
+void ft_cast_g_rays()
 {
 	int i;
+	float ray_angle;
 
+	ray_angle = g_player.rotation_angle - (FOV_ANGLE / 2);
+	ray_angle = normalizeangle(ray_angle);
 	i = 0;
-	while (i < size)
+	while (i < g_conf.num_rays)
 	{
-		put_my_pixel(x + i, y, color);
-		i++;
-	}
-	return 1;
-}
-
-int ft_square(int x, int y, int color, int size)
-{
-	int i;
-
-	i = 0;
-	while (i < size)
-	{
-		ft_hor_line(x, y + i, color, size);
-		i++;
-	}
-	return (1);
-}
-void	draw_ray(float angle, float d, int color)
-{
-	float y;
-	float x;
-	float i;
-
-	i = 0;
-	while (i < d)
-	{
-		x = cos(angle) * i + player.pos.x;
-		y = sin(angle) * i + player.pos.y;
-		put_my_pixel(x, y, color);
-		i++;
-	}
-
-}
-
-
-float distance_between(float x1, float y1, float x2, float y2) {
-    return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-}
-
-void ft_cast_rays()
-{
-	int i;
-	float rayAngle;
-
-	rayAngle = player.rotationAngle - (FOV_ANGLE / 2);
-	rayAngle = normalizeangle(rayAngle);
-	i = 0;
-	while (i < NUM_RAYS)
-	{
-		ft_cast_ray(rayAngle, i);
-		// printf("id: %d, angle : %f, distance : %f\n", i, rayAngle, rays[i].distance);
-		// draw_ray(rayAngle, rays[i].distance, 0x00FF00);
-		rayAngle += FOV_ANGLE / NUM_RAYS;
+		ft_cast_ray(ray_angle, i);
+		// printf("id: %d, angle : %f, distance : %f\n", i, ray_angle, g_rays[i].distance);
+		// draw_ray(ray_angle, g_rays[i].distance, 0x00FF00);
+		ray_angle += FOV_ANGLE / g_conf.num_rays;
 		i++;
 	}
 }
@@ -107,58 +49,33 @@ int skip(int r, t_position pos,int color)
 	return (0);
 }
 
-void ft_player(int r, t_position pos,int coolor)
+void ft_g_player(int r, t_position pos,int coolor)
 {
 	// skip(r, pos, 0x0000FF);
-	ft_cast_rays();
-}
-
-int ft_init()
-{
-	// int i;
-	// int j;
-
-	// i = 0;
-	// while (i < g_conf.max_height)
-	// {
-	// 	j = 0;
-	// 	while (j < g_conf.max_width)
-	// 	{
-	// 		if (g_conf.map[i][j] == '1' || g_conf.map[i][j] == ' ')
-	// 			ft_square(i * TILE_SIZE, j * TILE_SIZE, 0xFF0000, TILE_SIZE);
-	// 		else
-	// 			ft_square(i * TILE_SIZE, j * TILE_SIZE, 0x000000, TILE_SIZE);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
-	return (1);
+	ft_cast_g_rays();
 }
 
 int ft_render()
 {
-	ft_init();
-	ft_clear_buffer();
-	ft_player(TILE_SIZE / 2, player.pos, 0x0000FF);
-	ft_generate_3d();
+	ft_g_player(TILE_SIZE / 2, g_player.pos, 0x0000FF);
+	ft_generate_3d(0, 0, 0, 0);
 	mlx_put_image_to_window(g_env.ptr, g_env.win, g_env.img, 0, 0);
 	return (1);
 }
 
-void move_player()
+void move_g_player()
 {
-	player.rotationAngle += player.turnDirection * player.turnSpeed;
-	float move_step = player.walkDirection * player.walkSpeed;
-	float newX = player.pos.x + cos(player.rotationAngle) * (move_step * 3);
-	float newY = player.pos.y + sin(player.rotationAngle) * (move_step * 3);
-	// printf("%d\n", has_wall((t_position){newX, newY}));
+	g_player.rotation_angle += g_player.turn_direction * g_player.turn_speed;
+	float move_step = g_player.walk_direction * g_player.walk_speed;
+	float newX = g_player.pos.x + cos(g_player.rotation_angle) * (move_step * 3);
+	float newY = g_player.pos.y + sin(g_player.rotation_angle) * (move_step * 3);
 	if (!has_wall((t_position){newX, newY}))
 	{
-		player.pos.x = newX;
-		player.pos.y = newY;
+		g_player.pos.x = newX;
+		g_player.pos.y = newY;
 	}
-	player.turnDirection = 0;
-    player.walkDirection = 0;
+	g_player.turn_direction = 0;
+    g_player.walk_direction = 0;
 }
 
 int keyPress(int key, void *arg)
@@ -171,33 +88,33 @@ int keyPress(int key, void *arg)
     }
 	else if (key == 13 || key == 126)
 	{
-		player.walkDirection = 1;
+		g_player.walk_direction = 1;
 	}
 	else if (key == 1 || key == 125)
 	{
-		player.walkDirection = -1;
+		g_player.walk_direction = -1;
 	}
 	else if (key == 123)
 	{
-		player.turnDirection = -1;
+		g_player.turn_direction = -1;
 	}
 	else if (key == 124)
 	{
-		player.turnDirection = 1;
+		g_player.turn_direction = 1;
 	}
 	else if (key == 0)
 	{
-		player.left_right = -90;
+		g_player.left_right = -90;
 		ft_left_or_right();
-		player.left_right = 0;
+		g_player.left_right = 0;
 	}
 	else if (key == 2)
 	{
-		player.left_right = 90;
+		g_player.left_right = 90;
 		ft_left_or_right();
-		player.left_right = 0;
+		g_player.left_right = 0;
 	}
-	move_player();
+	move_g_player();
 	ft_render();
 	return (0);
 }
@@ -205,18 +122,17 @@ int keyPress(int key, void *arg)
 int main(int argc, char **argv)
 {
 	g_env.ptr = mlx_init();
-	file(argc, argv);
+	file(argc, argv, 1);
 	// TILE_SIZE = g_conf.win_w / g_conf.max_width;
     g_env.win = mlx_new_window(g_env.ptr, g_conf.win_w, g_conf.win_h, "hello world!");
 	g_env.img =  mlx_new_image(g_env.ptr, g_conf.win_w, g_conf.win_h);
 	g_env.addr = mlx_get_data_addr(g_env.img, &g_env.bpp, &g_env.line_length, &g_env.endian);
 
-	rays = malloc (NUM_RAYS * sizeof(t_ray));
-	// ft_init();
-	// ft_generate_3d();
+	g_rays = malloc (g_conf.num_rays * sizeof(t_ray));
+	// ft_generate_3d(0, 0, 0, 0);
 	// printf("%d, %d\n", g_player.default_i, g_player.default_j);
-	ft_player(TILE_SIZE / 2, (t_position){g_player.default_i, g_player.default_j}, 0x0000ff);
-	ft_generate_3d();
+	ft_g_player(TILE_SIZE / 2, (t_position){g_player.default_i, g_player.default_j}, 0x0000ff);
+	ft_generate_3d(0, 0, 0, 0);
 	mlx_put_image_to_window(g_env.ptr, g_env.win, g_env.img, 0, 0);
 	mlx_hook(g_env.win, 2, 1L<<0, keyPress, (void *)0);
     mlx_loop(g_env.ptr);

@@ -12,97 +12,86 @@
 
 #include "lib.h"
 
-void    ft_clear_buffer()
+void	ft_fill(int x, int start, int end, int color)
 {
-    int i;
-    int j;
+	int i;
 
-    i = 0;
-    while (i < g_conf.win_h)
-    {
-        j = 0;
-        while(j < g_conf.win_w)
-        {
-            put_my_pixel(i, j, 0);
-            j++;
-        }
-        i++;
-    }
+	i = start;
+	while (i < end)
+	{
+		put_my_pixel(i, x, color);
+		i++;
+	}
 }
 
-void    ft_fill(int x,int start, int end, int color)
+int		ft_get_y(int y, int wall_strip_height)
 {
-    int i;
-
-    i = start;
-    while (i < end)
-    {
-        put_my_pixel(i, x, color);
-        i++;
-    }
-}
-
-int     ft_get_textcolor(int ray_id, int y, int top_pixel, int wall_strip_height)
-{
-    int text_x;
-    int text_y;
-    int distance_from_top;
-	unsigned int *from;
+	int distance_from_top;
 
 	distance_from_top = y + (wall_strip_height / 2) - (g_conf.win_h / 2);
-	if (rays[ray_id].wasHitVert)
-	{
-		if (!rays[ray_id].isRayRight)
-			from = g_conf.ea.addr;
-		if (rays[ray_id].isRayRight)
-			from = g_conf.we.addr;
-	}
-	if (!rays[ray_id].wasHitVert)
-	{
-		if (!rays[ray_id].isRayDown)
-			from = g_conf.no.addr;
-		if (rays[ray_id].isRayDown)
-			from = g_conf.so.addr;
-	}
-    if (rays[ray_id].wasHitVert)
-        text_x = (int)rays[ray_id].wallHitY % TILE_SIZE;
-    else 
-        text_x = (int)rays[ray_id].wallHitX % TILE_SIZE;
-    text_y = distance_from_top * ((float)g_conf.no.height / wall_strip_height);
-    return from[(g_conf.no.width * text_y) + text_x];
+	return (distance_from_top * ((float)g_conf.no.height / wall_strip_height));
 }
 
-void    ft_generate_3d()
+int		ft_get_color(int ray_id, int y, int top_pixel, int wall_strip_height)
 {
-    int i;
-    int y;
-    float distance_pro;
-    float projected_wall;
-    int wall_strip_height;
-    int top_pixel;
-    int bottom_pixel;
-    float perp_dis;
+	int				text_x;
+	int				text_y;
+	int				distance_from_top;
+	unsigned int	*from;
 
-    i = 0;
-    y = 0;
-    while(i < NUM_RAYS)
-    {
-        perp_dis = rays[i].distance * cos(rays[i].rayAngle - player.rotationAngle);
-        distance_pro = (g_conf.win_w / 2) / tan(FOV_ANGLE / 2);
-        projected_wall = (TILE_SIZE / perp_dis) * distance_pro;
-        wall_strip_height = (int)projected_wall;
-        top_pixel = (g_conf.win_h / 2) - (wall_strip_height / 2);
-        top_pixel = top_pixel < 0 ? 0 : top_pixel;
-        bottom_pixel = (g_conf.win_h / 2) + (wall_strip_height / 2);
-        bottom_pixel = bottom_pixel > g_conf.win_h ? g_conf.win_h : bottom_pixel;
-        y = top_pixel;
-        ft_fill(i, 0, top_pixel, g_conf.f);
-        while (y < bottom_pixel)
-        {
-            put_my_pixel(y, i, (int)ft_get_textcolor(i, y, top_pixel, wall_strip_height));
-            y++;
-        }
-        ft_fill(i, bottom_pixel,g_conf.win_h, g_conf.c);
-        i++;
-    }
+	if (g_rays[ray_id].was_hit_vert)
+	{
+		if (!g_rays[ray_id].is_ray_right)
+			from = g_conf.ea.addr;
+		else if (g_rays[ray_id].is_ray_right)
+			from = g_conf.we.addr;
+	}
+	if (!g_rays[ray_id].was_hit_vert)
+	{
+		if (!g_rays[ray_id].is_ray_down)
+			from = g_conf.no.addr;
+		else if (g_rays[ray_id].is_ray_down)
+			from = g_conf.so.addr;
+	}
+	if (g_rays[ray_id].was_hit_vert)
+		text_x = (int)g_rays[ray_id].wall_hit_y % TILE_SIZE;
+	else
+		text_x = (int)g_rays[ray_id].wall_hit_x % TILE_SIZE;
+	text_y = ft_get_y(y, wall_strip_height);
+	return (from[(g_conf.no.width * text_y) + text_x]);
+}
+
+void	ft_fill_c_a_f(int i, int top_p, int bottom_pixel)
+{
+	ft_fill(i, 0, top_p, g_conf.f);
+	ft_fill(i, bottom_pixel, g_conf.win_h, g_conf.c);
+}
+
+void	ft_generate_3d(int i, int y, float distance_pro, float pro_wall)
+{
+	int		top_p;
+	int		bottom_pixel;
+	float	perp_dis;
+
+	while (i < g_conf.num_rays)
+	{
+		perp_dis = g_rays[i].distance * cos(g_rays[i].ray_angle - \
+		g_player.rotation_angle);
+		distance_pro = (g_conf.win_w / 2) / tan(FOV_ANGLE / 2);
+		pro_wall = (TILE_SIZE / perp_dis) * distance_pro;
+		top_p = (g_conf.win_h / 2) - ((int)pro_wall / 2);
+		top_p = top_p < 0 ? 0 : top_p;
+		bottom_pixel = (g_conf.win_h / 2) + ((int)pro_wall / 2);
+		if (bottom_pixel > g_conf.win_h)
+			bottom_pixel = g_conf.win_h;
+		else
+			bottom_pixel = bottom_pixel;
+		y = top_p;
+		while (y < bottom_pixel)
+		{
+			put_my_pixel(y, i, (int)ft_get_color(i, y, top_p, (int)pro_wall));
+			y++;
+		}
+		ft_fill_c_a_f(i++, top_p, bottom_pixel);
+	}
 }

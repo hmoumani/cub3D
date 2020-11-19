@@ -12,17 +12,19 @@
 
 #include "lib.h"
 
-void	ft_left_or_right()
+void	ft_left_or_right(void)
 {
 	float x_to_check;
 	float y_to_check;
 
-	x_to_check = cos((player.rotationAngle + ft_rad(player.left_right))) * 40 + player.pos.x;
-	y_to_check = sin((player.rotationAngle + ft_rad(player.left_right))) * 40 + player.pos.y;
+	x_to_check = cos((g_player.rotation_angle + ft_rad(g_player.left_right))) \
+	* 40 + g_player.pos.x;
+	y_to_check = sin((g_player.rotation_angle + \
+	ft_rad(g_player.left_right))) * 40 + g_player.pos.y;
 	if (!has_wall((t_position){x_to_check, y_to_check}))
 	{
-		player.pos.x = x_to_check;
-		player.pos.y = y_to_check;
+		g_player.pos.x = x_to_check;
+		g_player.pos.y = y_to_check;
 	}
 }
 

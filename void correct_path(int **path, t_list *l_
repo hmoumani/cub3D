@@ -1,0 +1,25 @@
+void correct_path(int **path, t_list *l_spells, int *bag, int *recipe, int i)
+{
+    t_order *spell;
+    int *tmp;
+    int j;
+    tmp = *path;
+    j = find_index(l_spells, path[i]);
+    spell = (t_order*)ft_find_struct_list(l_spells, j);
+    if (!need_spell(recipe, spell->recipe) || !afford_spell(spell->recipe, bag))
+    {
+       return -1;
+    }
+    if (need_spell(recipe, spell->recipe) && afford_spell(spell->recipe, bag))
+    {
+         for (int z = 0; z < 4; z++) {
+             recipe[z] = recipe[z] + spell->recipe[z];
+             bag[z] = bag[z] + spell->recipe[z];
+         }
+        if (correct_path(path, l_spells, bag, recipe) == -1)
+        {
+
+        }
+    }
+}
+

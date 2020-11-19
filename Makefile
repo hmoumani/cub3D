@@ -21,7 +21,7 @@ all :
 	ft_lstlast_bonus.c \
 	ft_lstnew_bonus.c \
 	ft_lstsize_bonus.c \
-	ft_print_error.c \
+	ft_error.c \
 	ft_putstr_fd.c \
 	ft_redirect_to.c \
 	ft_split.c \
@@ -42,5 +42,6 @@ all :
 	get_next_line_utils.c \
 	ft_cast_ray.c \
 	ft_generate_3d.c \
-	-I /usr/local/include -L /usr/local/bin -lmlx -framework OpenGl -framework AppKit -g \
+	ft_draw_functions.c \
+	-I /usr/local/include -L /usr/local/bin -lmlx -framework OpenGl -framework AppKit -fsanitize=address \
 	-o cub3D

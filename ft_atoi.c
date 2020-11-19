@@ -12,36 +12,37 @@
 
 #include "lib.h"
 
-float	normalizeangle(float rayangle)
+float	normalizeangle(float ray_angle)
 {
-	rayangle = remainderf(rayangle,  TWO_PI);
-	if (rayangle < 0)
-		rayangle = TWO_PI + rayangle;
-	return(rayangle);
+	ray_angle = remainderf(ray_angle, TWO_PI);
+	if (ray_angle < 0)
+		ray_angle = TWO_PI + ray_angle;
+	return (ray_angle);
 }
 
-int has_wall(t_position pos)
+int		has_wall(t_position pos)
 {
-	int indexX = floor(pos.x / TILE_SIZE);
-	int indexY = floor(pos.y / TILE_SIZE);
-	// if (indexX == 38 && indexY == 64)
-	// 	printf("here");
-	// printf("x : %d, y : %d\n", indexX, indexY);
-	if (indexX < 0 || indexX > g_conf.max_height - 1 || indexY < 0 || indexY > g_conf.max_width - 1)
-		return (True);
-	return (g_conf.map[indexX][indexY] == '1' || g_conf.map[indexX][indexY] == ' ');
+	int x;
+	int y;
+
+	y = floor(pos.y / TILE_SIZE);
+	x = floor(pos.x / TILE_SIZE);
+	if (x < 0 || x > g_conf.max_height - 1 || y < 0 || \
+	y > g_conf.max_width - 1)
+		return (TRUE);
+	return (g_conf.map[x][y] == '1' || g_conf.map[x][y] == ' ');
 }
 
-float ft_rad(float num)
+float	ft_rad(float num)
 {
-	return (num *(PI / 180));
+	return (num * (PI / 180));
 }
-float ft_sign(float num)
+float	ft_sign(float num)
 {
 	return num < 0 ? -1 : 1;
 }
 
-int	ft_atoi(const char *str)
+int		ft_atoi(const char *str)
 {
 	int		i;
 	int		sign;
@@ -63,7 +64,7 @@ int	ft_atoi(const char *str)
 			integer *= 10;
 			integer += str[i] - 48;
 		}
-		else if(str[i] == ' ')
+		else if (str[i] == ' ')
 			return (integer * sign);
 		else
 			return (-1);
