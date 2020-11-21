@@ -10,8 +10,12 @@
 #                                                                              #
 # **************************************************************************** #
 
-all :
-	gcc -g cub3d.c \
+CFLAGS = -Wall -Wextra -Werror
+
+NAME = cub3D
+
+$(NAME):
+	gcc $(CFLAGS) cub3d.c \
 	file.c \
 	ft_atoi.c \
 	ft_handle_map.c \
@@ -45,5 +49,13 @@ all :
 	ft_draw_functions.c \
 	ft_exit.c \
 	ft_join_space.c \
-	-I /usr/local/include -L /usr/local/bin -lmlx -framework OpenGl -framework AppKit libmlx.dylib -fsanitize=address \
+	-I /usr/local/include -L /usr/local/bin -lmlx -framework OpenGl -framework AppKit libmlx.dylib \
 	-o cub3D
+
+all : $(NAME)
+
+fclean:
+	rm $(NAME)
+re: fclean all
+	
+# -fsanitize=address

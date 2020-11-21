@@ -55,7 +55,7 @@ void	move_g_player(void)
 	g_player.walk_direction = 0;
 }
 
-int		key_press(int key, void *arg)
+int		key_press(int key)
 {
 	printf("%d\n", key);
 	if (key == 53)

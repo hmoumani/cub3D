@@ -14,7 +14,10 @@
 
 void	ft_init_config(char **line)
 {
-	g_conf = (t_config){-1, -1, -1, -1};
+	g_conf.win_h = -1;
+	g_conf.win_w = -1;
+	g_conf.f = -1;
+	g_conf.c = -1;
 	g_conf.no = (t_texture){NULL, NULL, -1, -1, -1, -1, -1};
 	g_conf.so = (t_texture){NULL, NULL, -1, -1, -1, -1, -1};
 	g_conf.we = (t_texture){NULL, NULL, -1, -1, -1, -1, -1};

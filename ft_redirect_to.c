@@ -80,9 +80,9 @@ void	ft_redirect_to(char **ptr, int count)
 	else if (!strncmp(ptr[0], "S", 2))
 		ft_treat_spr(ptr, count);
 	else if (!strncmp(ptr[0], "F", 2))
-		ft_treat_f(ptr);
+		ft_treat_f(ptr, count);
 	else if (!strncmp(ptr[0], "C", 2))
-		ft_treat_c(ptr);
+		ft_treat_c(ptr, count);
 	else
 	{
 		ft_putstr_fd("Error\nmap file is misconfigured", 1);

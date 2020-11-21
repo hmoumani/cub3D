@@ -32,11 +32,10 @@ int		ft_get_y(int y, int wall_strip_height)
 	return (distance_from_top * ((float)g_conf.no.height / wall_strip_height));
 }
 
-int		ft_get_color(int ray_id, int y, int top_pixel, int wall_strip_height)
+int		ft_get_color(int ray_id, int y, int wall_strip_height)
 {
 	int				text_x;
 	int				text_y;
-	int				distance_from_top;
 	unsigned int	*from;
 
 	if (g_rays[ray_id].was_hit_vert)
@@ -84,12 +83,10 @@ void	ft_generate_3d(int i, int y, float distance_pro, float pro_wall)
 		bottom_pixel = (g_conf.win_h / 2) + ((int)pro_wall / 2);
 		if (bottom_pixel > g_conf.win_h)
 			bottom_pixel = g_conf.win_h;
-		else
-			bottom_pixel = bottom_pixel;
 		y = top_p;
 		while (y < bottom_pixel)
 		{
-			put_my_pixel(y, i, (int)ft_get_color(i, y, top_p, (int)pro_wall));
+			put_my_pixel(y, i, (int)ft_get_color(i, y, (int)pro_wall));
 			y++;
 		}
 		ft_fill_c_a_f(i++, top_p, bottom_pixel);

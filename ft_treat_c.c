@@ -12,19 +12,19 @@
 
 #include "lib.h"
 
-void	ft_treat_c(char **ptr)
+void	ft_treat_c(char **ptr, int count)
 {
 	char	**p;
 	int		r;
 	int		g;
 	int		b;
+	char	*rgb;
 
 	if (g_conf.c != -1)
 		ft_error("Ceilling color repeated.\n");
-	if (ft_ptr_str_len(ptr) != 2)
-		ft_error("Error in ceilling rgb. usage: F r,g,b\n");
-	p = ft_split(ptr[1], ',', ft_count_words(ptr[1], ','));
-	if (ft_ptr_str_len(p) != 3)
+	rgb = ft_join_file(ptr, count);
+	p = ft_split(rgb, ',', ft_count_words(ptr[1], ','));
+	if (ft_ptr_str_len(p) != 3 || ft_count_char(rgb, ',') != 2)
 		ft_error("fix argument for ceilling color.\nusage: F r,g,b\n");
 	r = ft_atoi(p[0], 0);
 	g = ft_atoi(p[1], 0);
@@ -33,5 +33,6 @@ void	ft_treat_c(char **ptr)
 		ft_error("R,G,B colors should be numbers in range[0,255].\n");
 	g_conf.c = create_trgb(0, r, g, b);
 	g_conf.count++;
+	free(rgb);
 	ft_failed(p, ft_count_words(ptr[1], ','));
 }

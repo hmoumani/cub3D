@@ -53,7 +53,7 @@ void	ft_check_zero(int i, int j)
 	}
 }
 
-int		ft_check_sprite(int i, int j, char c)
+int		ft_check_sprite(int i, int j)
 {
 	ft_check_zero(i, j);
 	return (0);
@@ -77,7 +77,7 @@ void	ft_iter_map(void)
 			else if (c == 'W' || c == 'E' || c == 'N' || c == 'S')
 				ft_check_g_player(i, j, c);
 			else if (c == '2')
-				ft_check_sprite(i, j, c);
+				ft_check_sprite(i, j);
 			j++;
 		}
 		i++;
@@ -92,7 +92,6 @@ void	ft_handle_map(void)
 	t_list	*curr;
 	int		left;
 	int		j;
-	char	c;
 
 	i = 0;
 	j = 0;

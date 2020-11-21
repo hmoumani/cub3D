@@ -14,17 +14,19 @@
 
 void	ft_treat_so(char **ptr, int count)
 {
+	char *file_name;
+
 	if (g_conf.so.height != -1)
 		ft_error("South texture repeated.\n");
-	if (ft_ptr_str_len(ptr) != 2)
-		ft_error("in South texture. usage: SO ./path_to_the_south_texture\n");
+	file_name = ft_join_file(ptr, count);
 	if (!ft_is_end_with(ptr[1], ".xpm"))
 		ft_error("in South texture. file extension is not valid!\n");
-	g_conf.so.img = mlx_xpm_file_to_image(g_env.ptr, ptr[1], \
+	g_conf.so.img = mlx_xpm_file_to_image(g_env.ptr, file_name, \
 	&g_conf.so.width, &g_conf.so.height);
 	if (!g_conf.so.img)
 		ft_error("in south texture. can't open file! \n");
 	g_conf.so.addr = (unsigned int *)mlx_get_data_addr(g_conf.so.img, \
 	&g_conf.so.bpp, &g_conf.so.line_length, &g_conf.so.endian);
 	g_conf.count++;
+	free(file_name);
 }
